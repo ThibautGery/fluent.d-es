@@ -29,3 +29,26 @@ If you want to use your own configuration file (without any optional plugins), y
 ### FLUENTD_OPT
 
 Use this variable to specify other options, like `-v` or `-q`.
+
+### conf example
+
+```
+<source>
+  @type forward
+</source>
+
+<match nginx.docker.**>
+  type parser
+  format nginx
+  remove_prefix nginx
+  key_name log
+  reserve_data yes
+</match>
+
+<match docker.**>
+  type elasticsearch
+  hosts http://your.host:9200
+  logstash_format true
+</match>
+
+```
